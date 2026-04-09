@@ -33,7 +33,7 @@ captures/
 keystore.properties
 *.jks
 *.keystore
-!debug.keystore
+!config/debug.keystore
 
 # Logs / crash dumps
 *.log

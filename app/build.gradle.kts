@@ -7,6 +7,7 @@ plugins {
 }
 
 val releaseKeystorePropertiesFile = rootProject.file("keystore.properties")
+val releaseKeystoreTemplateFile = rootProject.file("config/keystore.properties.example")
 val releaseKeystoreProperties = Properties()
 val requiredReleaseSigningKeys = listOf(
     "storeFile",
@@ -32,7 +33,7 @@ android {
 
     signingConfigs {
         getByName("debug") {
-            storeFile = rootProject.file("debug.keystore")
+            storeFile = rootProject.file("config/debug.keystore")
             storePassword = "android"
             keyAlias = "androiddebugkey"
             keyPassword = "android"
@@ -111,7 +112,7 @@ tasks.configureEach {
             check(hasReleaseSigning) {
                 buildString {
                     appendLine("Release signing is not configured.")
-                    appendLine("Copy keystore.properties.example to keystore.properties and fill in your real signing values.")
+                    appendLine("Copy ${releaseKeystoreTemplateFile.relativeTo(rootProject.projectDir).invariantSeparatorsPath} to keystore.properties and fill in your real signing values.")
                     appendLine("Expected file: ${releaseKeystorePropertiesFile.absolutePath}")
                     if (releaseKeystorePropertiesFile.exists()) {
                         appendLine("Missing keys: ${missingReleaseSigningKeys.joinToString(", ")}")
